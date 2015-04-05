@@ -1,23 +1,24 @@
 #!/bin/bash
 # Parameters
-#1: name for new user
-#2: public ssh key of local machine (use ssh_keygen)
+## 1: ip address of droplet
+## 2: name for new user
+## 3: public ssh key of local machine (use ssh_keygen)
 
 
-#ssh root@SERVER_IP_ADDRESS
+ssh root@$1
 
 # Environment setup
-echo "Creating user $1..."
-adduser $1
-gpasswd -a $1 sudo
+echo "Creating user $2..."
+adduser $2
+gpasswd -a $2 sudo
 
 ## SSH key setup
-echo "Changing to user $1..."
-su - $1
+echo "Changing to user $2..."
+su - $2
 mkdir .ssh
 chmod 700 .ssh
 cd .ssh
-echo $2 > authorized_keys
+echo $3 > authorized_keys
 chmod 600 authorized_keys
 exit #return to root user
 ## Other options for /etc/ssh/sshd_config:
@@ -28,8 +29,9 @@ service ssh restart
 
 
 # Install stuff
-echo "Installing stuff with user $1..."
-su - $1
+echo "Installing stuff with user $2..."
+su - $2
+
 ## Ruby
 echo "Installing Ruby..."
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
