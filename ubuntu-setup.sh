@@ -13,5 +13,9 @@ echo "Installing oh-my-zsh"
 apt-get install zsh
 git clone https://github.com/cwhitey/dotfiles.git
 cp dotfiles/.zshrc ~
-cp dotfiles/antigen.sh ~
+cp dotfiles/antigen.zsh ~
 chsh /usr/bin/zsh
+
+
+
+rm -rf dotfiles
