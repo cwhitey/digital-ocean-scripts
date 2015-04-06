@@ -14,7 +14,7 @@ apt-get install zsh
 git clone https://github.com/cwhitey/dotfiles.git
 cp dotfiles/.zshrc ~
 cp dotfiles/antigen.zsh ~
-chsh /usr/bin/zsh
+chsh -s $(which zsh)
 
 
 
