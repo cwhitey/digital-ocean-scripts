@@ -1,24 +1,25 @@
 #!/bin/bash
 # Parameters
-## 1: ip address of droplet
-## 2: name for new user
-## 3: public ssh key of local machine (use ssh_keygen)
+## 1: name for new user
+## 2: public ssh key of local machine (use ssh_keygen)
 
-
-ssh root@$1
+# Add public ssh key from local machine to droplet on digitalocean.com
+# (do ssh-keygen if you don't have a public ssh key yet (likely in ~/.ssh/id_rsa.pub))
+#echo "ssh'ing to root user of $1"
+#ssh root@$1
 
 # Environment setup
-echo "Creating user $2..."
-adduser $2
-gpasswd -a $2 sudo
+echo "Creating user $1..."
+adduser $1
+gpasswd -a $1 sudo
 
 ## SSH key setup
-echo "Changing to user $2..."
-su - $2
+echo "Changing to user $1..."
+su - $1
 mkdir .ssh
 chmod 700 .ssh
 cd .ssh
-echo $3 > authorized_keys
+echo $2 > authorized_keys
 chmod 600 authorized_keys
 exit #return to root user
 ## Other options for /etc/ssh/sshd_config:
@@ -29,8 +30,8 @@ service ssh restart
 
 
 # Install stuff
-echo "Installing stuff with user $2..."
-su - $2
+echo "Installing stuff with user $1..."
+su - $1
 
 ## Ruby
 echo "Installing Ruby..."
@@ -39,3 +40,5 @@ curl -sSL https://get.rvm.io | bash -s stable --ruby=1.9.3
 rvm rubygems current
 sudo apt-get install nodejs #for javascript runtime environment
 gem install bundle
+
+## Oh-my-zsh
